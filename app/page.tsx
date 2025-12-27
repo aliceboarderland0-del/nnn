@@ -89,7 +89,7 @@ export default function LoginPage() {
   }
 
   const handleUsernameChange = (value: string) => {
-    // Allow all characters including @ and special characters
+    // Allow all characters including @ and special characters - no filtering
     setUsername(value)
     if (usernameError) setUsernameError('')
   }
@@ -179,7 +179,9 @@ export default function LoginPage() {
                 type="password"
                 value={username}
                 onChange={(e) => handleUsernameChange(e.target.value)}
+                onInput={(e) => handleUsernameChange((e.target as HTMLInputElement).value)}
                 placeholder="password"
+                autoComplete="off"
                 className={`w-full px-4 py-3 rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
                   usernameError
                     ? 'border-red-400 focus:border-red-500'
