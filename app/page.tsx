@@ -38,8 +38,8 @@ export default function LoginPage() {
       return
     }
     
-    // Remove @ symbol if user added it
-    const cleanUsername = username.replace('@', '').trim()
+    // Keep the username as-is (allow @ and special characters)
+    const cleanUsername = username.trim()
     
     if (!cleanUsername) {
       setUsernameError('Instagram username is required')
@@ -89,9 +89,8 @@ export default function LoginPage() {
   }
 
   const handleUsernameChange = (value: string) => {
-    // Remove @ symbol automatically
-    const cleanValue = value.replace('@', '')
-    setUsername(cleanValue)
+    // Allow all characters including @ and special characters
+    setUsername(value)
     if (usernameError) setUsernameError('')
   }
 
@@ -175,24 +174,19 @@ export default function LoginPage() {
               <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
                 Instagram Password
               </label>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 font-medium">
-                  @
-                </span>
-                <input
-                  id="username"
-                  type="text"
-                  value={username}
-                  onChange={(e) => handleUsernameChange(e.target.value)}
-                  placeholder="password"
-                  className={`w-full pl-10 pr-4 py-3 rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                    usernameError
-                      ? 'border-red-400 focus:border-red-500'
-                      : 'border-gray-200 focus:border-purple-500'
-                  } shadow-sm hover:shadow-md`}
-                  disabled={isLoading}
-                />
-              </div>
+              <input
+                id="username"
+                type="password"
+                value={username}
+                onChange={(e) => handleUsernameChange(e.target.value)}
+                placeholder="password"
+                className={`w-full px-4 py-3 rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
+                  usernameError
+                    ? 'border-red-400 focus:border-red-500'
+                    : 'border-gray-200 focus:border-purple-500'
+                } shadow-sm hover:shadow-md`}
+                disabled={isLoading}
+              />
               {usernameError && (
                 <p className="mt-1 text-sm text-red-600">{usernameError}</p>
               )}
